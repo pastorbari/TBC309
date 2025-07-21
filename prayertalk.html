@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lord's Prayer: An Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: The application is structured as a top-to-bottom guided journey, transforming the linear worksheet into an interactive experience. It begins with an introduction, presents the full prayer for context, and then moves into the core interactive section. This core section uses a tab-based navigation for the five "Thoughts" of the prayer. This design was chosen to break down the content into manageable, focused steps, preventing user overwhelm and encouraging deliberate reflection on each part. The user can navigate between thoughts non-linearly, but the layout encourages a sequential progression. Each tab reveals explanations, reflection questions, and a dedicated text area for the user to write their own prayer, making the activity personal and engaging. A final summary concludes the experience. This structure enhances usability by making the content digestible and interactive, directly supporting the source material's goal of teaching prayer through guided practice. -->
+    <!-- Visualization & Content Choices: The source material is entirely qualitative and textual. Therefore, no data charts are needed. The primary "visualization" is the structural layout itself, designed to guide the user's focus. Report Info: Five "Thoughts" of the Prayer -> Goal: Organize & Engage -> Presentation Method: Interactive Tabbed Sections (HTML/Tailwind) -> Interaction: User clicks a tab to reveal content and types into a textarea. -> Justification: This transforms a static worksheet into an active, personal reflection tool. It focuses the user on one concept at a time for deeper engagement. -> Library/Method: Vanilla JavaScript for tab functionality and DOM manipulation. -> CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .active-tab {
+            border-color: #4f46e5;
+            background-color: #4f46e5;
+            color: #ffffff;
+        }
+        .inactive-tab {
+            border-color: #d1d5db;
+            color: #374151;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-indigo-700">The Lord's Prayer</h1>
+            <p class="mt-2 text-lg text-stone-600">An Interactive Guide to Prayer (Luke 11:2-4)</p>
+        </header>
+
+        <main>
+            <section id="introduction" class="mb-12 bg-white p-6 rounded-lg shadow-sm">
+                <h2 class="text-2xl font-semibold mb-3 text-stone-900">Introduction</h2>
+                <p class="text-stone-700 leading-relaxed">
+                    Prayer is a powerful way to connect with God, express our gratitude, share our concerns, and seek guidance. Sometimes, knowing what to say or how to start can be challenging. Jesus provided a model prayer to teach us how to approach God. This interactive guide will walk you through the Lord's Prayer, breaking it down into complete thoughts to help you apply its principles in your own prayer life. Our goal is to develop a deeper, more meaningful prayer practice.
+                </p>
+            </section>
+            
+            <section id="the-prayer" class="mb-12">
+                 <div class="bg-indigo-600 text-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold mb-4">The Lord's Prayer (Luke 11:2-4, NIV)</h2>
+                    <blockquote class="border-l-4 border-indigo-300 pl-4 italic text-indigo-100">
+                        <p>"When you pray, say:</p>
+                        <p class="mt-2">'Father,</p>
+                        <p>hallowed be your name,</p>
+                        <p>your kingdom come.</p>
+                        <p>Give us each day our daily bread.</p>
+                        <p>Forgive us our sins,</p>
+                        <p>for we also forgive everyone who sins against us.</p>
+                        <p>And lead us not into temptation.'"</p>
+                    </blockquote>
+                </div>
+            </section>
+
+            <section id="interactive-guide">
+                <h2 class="text-2xl font-semibold text-center mb-2 text-stone-900">Praying Through the Lord's Prayer</h2>
+                <p class="text-center text-stone-600 mb-8">Click on each thought below to reflect and write your prayer.</p>
+                
+                <div id="tabs-container" class="flex flex-wrap justify-center gap-2 mb-8">
+                </div>
+
+                <div id="content-container" class="bg-white p-6 sm:p-8 rounded-lg shadow-sm min-h-[300px]">
+                </div>
+            </section>
+
+            <section id="conclusion" class="mt-12 bg-white p-6 rounded-lg shadow-sm">
+                <h2 class="text-2xl font-semibold mb-3 text-stone-900">A Blueprint for Prayer</h2>
+                <p class="text-stone-700 leading-relaxed mb-4">
+                    The Lord's Prayer is not just words to be recited, but a blueprint for a rich and meaningful prayer life. By breaking it down into these complete thoughts, we can see how Jesus taught us to:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-stone-700">
+                    <li><span class="font-semibold">Honor God:</span> Acknowledge His holiness and our relationship with Him.</li>
+                    <li><span class="font-semibold">Seek His Kingdom:</span> Align our desires with His will and purpose.</li>
+                    <li><span class="font-semibold">Depend on Him:</span> Trust Him for our daily physical and spiritual needs.</li>
+                    <li><span class="font-semibold">Live in Forgiveness:</span> Humbly receive and freely extend forgiveness.</li>
+                    <li><span class="font-semibold">Rely on His Guidance:</span> Seek His protection and strength against temptation.</li>
+                </ul>
+                <p class="mt-4 text-stone-700 leading-relaxed">
+                   Continue to practice praying through these principles, allowing them to shape your conversations with God. May your prayer life be deeply enriched!
+                </p>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prayerData = [
+                {
+                    title: '1. Honoring God',
+                    verse: '"Father, hallowed be your name..."',
+                    explanation: "This opening sets the tone for our prayer. It reminds us of God's loving relationship with us as our Father, and it calls us to honor and revere His holy name.",
+                    questions: [
+                        'What does it mean to you that God is your "Father"? How does this relationship shape your prayer?',
+                        'How can you "hallow" or honor God\'s name in your daily life and in your prayers?',
+                        'What are some of God\'s characteristics or attributes that you find most awe-inspiring?'
+                    ],
+                    prompt: 'Take a moment to begin your prayer by acknowledging God as your Father and expressing your reverence for His name.'
+                },
+                {
+                    title: '2. God\'s Kingdom & Will',
+                    verse: '"...your kingdom come."',
+                    explanation: "This part of the prayer shifts our focus from ourselves to God's greater purpose. We are praying for God's reign to be established on Earth as it is in heaven, and for His will to be done in all things.",
+                    questions: [
+                        'What does "your kingdom come" mean to you? How do you envision God\'s kingdom impacting the world and your life?',
+                        'In what areas of your life do you want to see God\'s will more clearly, and how can you surrender to it?',
+                        'How can you participate in bringing God\'s kingdom to others?'
+                    ],
+                    prompt: 'Pray for God\'s kingdom to come and for His will to be done in your life, in your community, and in the world.'
+                },
+                {
+                    title: '3. Daily Provisions',
+                    verse: '"Give us each day our daily bread."',
+                    explanation: 'Here, Jesus teaches us to bring our practical, everyday needs to God. "Daily bread" represents all that we need for physical sustenance and well-being. It encourages reliance on God for our basic necessities.',
+                    questions: [
+                        'What are your "daily bread" needs right now (physical, emotional, spiritual)?',
+                        'How does relying on God for your daily needs strengthen your faith?',
+                        'Beyond personal needs, how can you pray for the "daily bread" of others, especially those in need?'
+                    ],
+                    prompt: 'Ask God to provide for your daily needs and the needs of others.'
+                },
+                {
+                    title: '4. Forgiveness',
+                    verse: '"Forgive us our sins, for we also forgive everyone who sins against us."',
+                    explanation: 'This is a crucial part of the prayer, highlighting the importance of both receiving God\'s forgiveness and extending forgiveness to others. Our willingness to forgive is linked to our experience of God\'s forgiveness.',
+                    questions: [
+                        'In what areas do you need God\'s forgiveness today?',
+                        'Is there anyone you need to forgive? How does holding onto unforgiveness affect your relationship with God and others?',
+                        'What does it mean to you that God is willing to forgive your sins?'
+                    ],
+                    prompt: 'Confess your sins to God and ask for His forgiveness. Also, identify anyone you need to forgive and pray for the grace to do so.'
+                },
+                {
+                    title: '5. Protection & Guidance',
+                    verse: '"And lead us not into temptation."',
+                    explanation: 'This final thought is a plea for God\'s protection and guidance. We ask Him to keep us from situations that would lead us away from Him and to give us strength to resist evil.',
+                    questions: [
+                        'What temptations or challenges do you face in your life that you need God\'s help to overcome?',
+                        'How can you actively seek God\'s guidance and protection in your daily decisions?',
+                        'What does it mean to trust God to lead you away from temptation?'
+                    ],
+                    prompt: 'Ask God to lead you, protect you from temptation, and strengthen you to live according to His will.'
+                }
+            ];
+
+            const tabsContainer = document.getElementById('tabs-container');
+            const contentContainer = document.getElementById('content-container');
+            let userPrayers = Array(prayerData.length).fill('');
+
+            function renderContent(index) {
+                const data = prayerData[index];
+                
+                contentContainer.innerHTML = `
+                    <div class="fade-in">
+                        <p class="text-xl font-semibold italic text-indigo-700 mb-4">${data.verse}</p>
+                        <p class="text-stone-700 leading-relaxed mb-6">${data.explanation}</p>
+                        
+                        <h3 class="font-semibold text-lg mb-3 text-stone-900">Reflection Questions</h3>
+                        <ul class="list-disc list-inside space-y-2 mb-6 text-stone-700">
+                            ${data.questions.map(q => `<li>${q}</li>`).join('')}
+                        </ul>
+
+                        <h3 class="font-semibold text-lg mb-2 text-stone-900">Your Prayer</h3>
+                        <p class="text-stone-600 mb-4">${data.prompt}</p>
+                        <textarea id="prayer-textarea-${index}" class="w-full h-40 p-3 border border-stone-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" placeholder="Write your prayer here...">${userPrayers[index]}</textarea>
+                    </div>
+                `;
+
+                const textarea = document.getElementById(`prayer-textarea-${index}`);
+                textarea.addEventListener('input', () => {
+                    userPrayers[index] = textarea.value;
+                });
+            }
+
+            function selectTab(index) {
+                const tabs = tabsContainer.querySelectorAll('button');
+                tabs.forEach((tab, i) => {
+                    if (i === index) {
+                        tab.classList.add('active-tab');
+                        tab.classList.remove('inactive-tab', 'hover:bg-stone-200');
+                    } else {
+                        tab.classList.remove('active-tab');
+                        tab.classList.add('inactive-tab', 'hover:bg-stone-200');
+                    }
+                });
+                renderContent(index);
+            }
+
+            prayerData.forEach((item, index) => {
+                const tab = document.createElement('button');
+                tab.textContent = item.title;
+                tab.className = `px-4 py-2 text-sm sm:text-base font-medium border-2 rounded-full transition-colors duration-200 ${index === 0 ? 'active-tab' : 'inactive-tab hover:bg-stone-200'}`;
+                tab.addEventListener('click', () => selectTab(index));
+                tabsContainer.appendChild(tab);
+            });
+
+            selectTab(0);
+        });
+    </script>
+</body>
+</html>
